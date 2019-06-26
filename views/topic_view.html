@@ -1,0 +1,45 @@
+{{template "header"}}}
+<title>{{.Topic.Title}}</title>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">我的博客</a>
+        <div>
+            {{template "navbar" .}}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h1>-----------------------------------------------------------------------------------------------</h1>
+    <h1>{{.Topic.Title}} <a href="/topic/modify?tid={{.Tid}}"class="btn btn-default">修改文章</a></h1>
+    <h6>分类：{{.Topic.Category}}</h6>
+    <p>{{.Topic.Content}}</p>
+</div>
+
+<div class="container">
+    {{$tid := .Topic.Id}}
+    {{range .Replies}}
+        <h3>{{.Name}}- - -><small>{{.Created}}</small> <a href="/reply/delete?tid={{$tid}}&rid={{.Id}}">删除</a> </h3>
+        {{.Content}}
+    {{end}}
+    <h3>本文回复</h3>
+    <form method="post" action="/reply/add">
+        <input type="hidden" name="tid" value="{{.Topic.Id}}">
+        <div class="form-group">
+            <label>显示昵称</label>
+            <input type="text" class="form-control" name="nickname">
+        </div>
+        <div class="form-group">
+            <label>内容:</label>
+            <textarea name="content" rows="10" cols="30" class="form-control"></textarea>
+        </div>
+        <button class="btn btn-default">提交回复</button>
+
+    </form>
+</div>
+<script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
